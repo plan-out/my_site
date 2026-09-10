@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>숲에서 비우고, 나로 채우다 | Visual Archive</title>
+
+  <!-- 웹폰트: Pretendard & Cormorant Garamond -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- GSAP & ScrollTrigger CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    :root {
+      --c-bg: #0D1C15;
+      --c-surface: #14281E;
+      --c-card: #1A3327;
+      --c-border: rgba(138, 191, 166, 0.15);
+      --c-text-main: #F4EFE6;
+      --c-text-muted: #A3B8AD;
+      --c-accent-sun: #E8AF55;
+      --c-moss: #4F8567;
+      --c-mint: #8ABFA6;
+      --c-deep: #1D3B2F;
+      
+      --font-display: 'Cormorant Garamond', serif;
+      --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+      --font-en: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--c-bg);
+      color: var(--c-text-main);
+      font-family: var(--font-sans);
+      line-height: 1.7;
+      letter-spacing: -0.01em;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(ellipse at 80% 0%, rgba(232, 175, 85, 0.08) 0%, transparent 60%),
+        radial-gradient(circle at 10% 30%, rgba(79, 133, 103, 0.15) 0%, transparent 50%);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Navigation */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+      backdrop-filter: blur(14px);
+      background: rgba(13, 28, 21, 0.7);
+      border-bottom: 1px solid var(--c-border);
+      z-index: 100;
+    }
+
+    .nav__logo {
+      font-family: var(--font-en);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      color: var(--c-accent-sun);
+    }
+
+    .nav__links {
+      display: flex;
+      gap: 2rem;
+      font-size: 0.88rem;
+      color: var(--c-text-muted);
+    }
+
+    .nav__links a:hover {
+      color: var(--c-text-main);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 160px 0 100px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero__grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 6px 14px;
+      background: rgba(138, 191, 166, 0.1);
+      border: 1px solid rgba(138, 191, 166, 0.25);
+      border-radius: 999px;
+      font-size: 0.8rem;
+      color: var(--c-mint);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero__badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--c-accent-sun);
+    }
+
+    .hero__title {
+      font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 1.2rem;
+      word-break: keep-all;
+    }
+
+    .hero__title span {
+      display: block;
+      color: var(--c-accent-sun);
+      font-family: var(--font-display);
+      font-size: 0.85em;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+    }
+
+    .hero__subtitle {
+      font-size: 1.15rem;
+      color: var(--c-text-muted);
+      margin-bottom: 2.5rem;
+      word-break: keep-all;
+    }
+
+    .hero__meta {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      padding: 1.5rem 0;
+      border-top: 1px solid var(--c-border);
+      border-bottom: 1px solid var(--c-border);
+    }
+
+    .hero__meta-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--c-mint);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.3rem;
+    }
+
+    .hero__meta-value {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    /* Poster Frame */
+    .hero__poster-wrap {
+      position: relative;
+    }
+
+    .hero__poster {
+      position: relative;
+      width: 100%;
+      max-width: 440px;
+      margin: 0 auto;
+      aspect-ratio: 1 / 1.77;
+      background: #182C22;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 
+        0 25px 60px -15px rgba(0, 0, 0, 0.7),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        0 0 35px rgba(232, 175, 85, 0.15);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .hero__poster:hover {
+      transform: translateY(-8px);
+      box-shadow: 
+        0 35px 70px -10px rgba(0, 0, 0, 0.8),
+        0 0 0 1px rgba(255, 255, 255, 0.2),
+        0 0 45px rgba(232, 175, 85, 0.25);
+    }
+
+    .hero__poster img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Concept Section */
+    .section {
+      padding: 120px 0;
+      border-top: 1px solid var(--c-border);
+    }
+
+    .section__header {
+      margin-bottom: 3.5rem;
+    }
+
+    .section__tag {
+      font-family: var(--font-en);
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--c-accent-sun);
+      margin-bottom: 0.5rem;
+    }
+
+    .section__heading {
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 700;
+    }
+
+    .concept__grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 4rem;
+    }
+
+    .concept__desc {
+      font-size: 1.05rem;
+      color: var(--c-text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 1.3rem;
+    }
+
+    .concept__desc strong {
+      color: var(--c-text-main);
+      font-weight: 600;
+    }
+
+    .concept__chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+
+    .concept__chip {
+      padding: 6px 14px;
+      border-radius: 99px;
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      font-size: 0.85rem;
+      color: var(--c-mint);
+    }
+
+    .concept__table {
+      background: var(--c-surface);
+      border-radius: 16px;
+      border: 1px solid var(--c-border);
+      padding: 2rem;
+    }
+
+    .concept__table-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.92rem;
+    }
+
+    .concept__table-row:last-child {
+      border-bottom: none;
+    }
+
+    .concept__table-key {
+      color: var(--c-text-muted);
+    }
+
+    .concept__table-val {
+      font-weight: 600;
+      text-align: right;
+    }
+
+    /* Style Guide */
+    .palette__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .color-card {
+      background: var(--c-surface);
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--c-border);
+    }
+
+    .color-card__preview {
+      height: 120px;
+      width: 100%;
+    }
+
+    .color-card__info {
+      padding: 1.2rem;
+    }
+
+    .color-card__name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+    }
+
+    .color-card__hex {
+      font-family: var(--font-en);
+      font-size: 0.85rem;
+      color: var(--c-text-muted);
+    }
+
+    .typography__wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .typo-box {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: 14px;
+      padding: 2rem;
+    }
+
+    .typo-box__badge {
+      font-size: 0.75rem;
+      color: var(--c-accent-sun);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.8rem;
+    }
+
+    .typo-box__sample {
+      font-size: 2rem;
+      margin-bottom: 0.8rem;
+      line-height: 1.2;
+    }
+
+    .typo-box__desc {
+      font-size: 0.88rem;
+      color: var(--c-text-muted);
+    }
+
+    /* =========================================================
+       Mockup Showcase (Large Vertical Zig-Zag Layout)
+    ========================================================= */
+    .mockup-flow {
+      display: flex;
+      flex-direction: column;
+      gap: 140px;
+      margin-top: 60px;
+    }
+
+    .mockup-row {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    /* 오른쪽 배치 (Reverse) */
+    .mockup-row--reverse {
+      grid-template-columns: 0.85fr 1.15fr;
+    }
+
+    .mockup-row--reverse .mockup-row__visual {
+      order: 2;
+    }
+
+    .mockup-row--reverse .mockup-row__content {
+      order: 1;
+    }
+
+    .mockup-row__visual {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      background: linear-gradient(145deg, #162E22, #0D1A14);
+      border: 1px solid var(--c-border);
+      padding: 4rem 2rem;
+      box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* 환경별 프레임 데코레이션 */
+    .mockup-frame {
+      width: 75%;
+      max-width: 420px;
+      aspect-ratio: 1 / 1.77;
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.5s ease;
+    }
+
+    .mockup-row:hover .mockup-frame {
+      transform: scale(1.02);
+    }
+
+    /* 1. 우드 프레임 효과 */
+    .mockup-frame--wood {
+      border: 14px solid #3d2d1f;
+      outline: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* 2. 현대적 메탈 라이트박스 효과 */
+    .mockup-frame--light {
+      border: 10px solid #1f2723;
+      box-shadow: 0 0 60px rgba(232, 175, 85, 0.25), 0 25px 50px rgba(0, 0, 0, 0.9);
+    }
+
+    /* 3. 종이 책자 질감 북커버 프레임 */
+    .mockup-frame--book {
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      box-shadow: -15px 20px 40px rgba(0, 0, 0, 0.7);
+    }
+
+    .mockup-row__content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .mockup-row__number {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      color: var(--c-accent-sun);
+      line-height: 1;
+      opacity: 0.8;
+    }
+
+    .mockup-row__badge {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--c-mint);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .mockup-row__title {
+      font-size: clamp(1.8rem, 2.6vw, 2.3rem);
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--c-text-main);
+      word-break: keep-all;
+    }
+
+    .mockup-row__desc {
+      font-size: 1.05rem;
+      color: var(--c-text-muted);
+      line-height: 1.75;
+      word-break: keep-all;
+    }
+
+    .mockup-row__specs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 0.8rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(138, 191, 166, 0.15);
+    }
+
+    .mockup-row__spec-item {
+      font-size: 0.85rem;
+      color: var(--c-text-muted);
+    }
+    .mockup-row__spec-item span {
+      color: var(--c-mint);
+      font-weight: 600;
+    }
+
+    /* Footer */
+    .footer {
+      padding: 100px 0 60px;
+      border-top: 1px solid var(--c-border);
+      text-align: center;
+      background: #08120E;
+    }
+
+    .footer__title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .footer__desc {
+      color: var(--c-text-muted);
+      max-width: 500px;
+      margin: 0 auto 2.5rem;
+      font-size: 0.95rem;
+    }
+
+    .footer__links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer__btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 12px 24px;
+      border-radius: 999px;
+      background: var(--c-accent-sun);
+      color: #0D1C15;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .footer__btn:hover {
+      transform: scale(1.03);
+      opacity: 0.95;
+    }
+
+    .footer__copy {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.25);
+    }
+
+    /* 기본 페이드 클래스 */
+    .anim-fade {
+      opacity: 0;
+      transform: translateY(35px);
+      will-change: transform, opacity;
+    }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      .mockup-flow {
+        gap: 80px;
+      }
+      .mockup-row, 
+      .mockup-row--reverse {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+      .mockup-row--reverse .mockup-row__visual {
+        order: 1;
+      }
+      .mockup-row--reverse .mockup-row__content {
+        order: 2;
+      }
+      .mockup-row__visual {
+        padding: 2.5rem 1.5rem;
+      }
+      .mockup-frame {
+        width: 85%;
+      }
+      .hero__grid, .concept__grid, .typography__wrap {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="nav">
+    <div class="nav__logo">Portfolio Archive</div>
+    <nav class="nav__links">
+      <a href="#concept">Concept</a>
+      <a href="#style">Style Guide</a>
+      <a href="#mockup">Mockup</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container hero__grid">
+      
+      <!-- Text Meta -->
+      <div class="hero__content anim-fade">
+        <div class="hero__badge">
+          <span class="hero__badge-dot"></span>
+          Mental Care & Forest Healing Campaign
+        </div>
+        <h1 class="hero__title">
+          숲에서 비우고,<br>나로 채우다
+          <span>Finding My Direction at the Edge of Forest</span>
+        </h1>
+        <p class="hero__subtitle">
+          멈춰 선 길 끝에서 찾은 진짜 내 방향 — 조급한 성장의 압박에서 벗어나 따뜻한 숲의 온기 속에서 내면의 호흡과 속도를 되찾는 산림 치유 비주얼 프로젝트.
+        </p>
+
+        <div class="hero__meta">
+          <div>
+            <div class="hero__meta-label">Year</div>
+            <div class="hero__meta-value">2026.09 (3 Days)</div>
+          </div>
+          <div>
+            <div class="hero__meta-label">Role</div>
+            <div class="hero__meta-value">Art Direction & AI Craft</div>
+          </div>
+          <div>
+            <div class="hero__meta-label">Tools</div>
+            <div class="hero__meta-value">Illustrator, Midjourney</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Poster Visual Frame -->
+      <div class="hero__poster-wrap anim-fade">
+        <div class="hero__poster">
+          <!-- 메인 포스터 이미지 경로 -->
+          <img src="포스터.png" alt="숲에서 비우고 나로 채우다 포스터 디자인" />
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Design Concept -->
+  <section id="concept" class="section">
+    <div class="container">
+      <div class="section__header anim-fade">
+        <div class="section__tag">01 / Design Architecture</div>
+        <h2 class="section__heading">따스한 물성과 중첩된 레이어가<br>전하는 회복의 서사</h2>
+      </div>
+
+      <div class="concept__grid">
+        <div class="concept__desc anim-fade">
+          <p>
+            <strong>물성과 질감의 전환:</strong> 차갑고 평면적인 디지털 그래픽의 한계를 넘어, 실제로 만져질 듯 포근한 <strong>'3D 니들펠트(Needle Felt) 및 펠트 페이퍼 크래프트 질감'</strong>을 포스터 전반에 차용했습니다. 부드러운 섬유 결의 질감은 불안과 번아웃을 겪는 현대인에게 즉각적인 심리적 안정감과 시각적 온기를 제공합니다.
+          </p>
+          <p>
+            <strong>프레임 인 프레임(Frame in Frame) 스토리텔링:</strong> 전경을 둘러싼 울창하고 짙은 그린 톤의 숲 프레임은 복잡한 고민과 방황을 대변하며, 굽이치는 돌길을 따라 시선이 닿는 원경의 아침 햇살과 설산은 내면의 확신을 상징합니다. <strong>'어둠에서 빛으로, 비움에서 채움으로'</strong> 나아가는 치유의 과정을 입체 레이어로 구현했습니다.
+          </p>
+          <p>
+            <strong>정적인 인물 연출:</strong> 목표만을 향해 조급히 달리는 현대인의 모습 대신, 길 한가운데 멈춰 서서 높은 나무와 햇살을 응시하는 뒷모습을 배치했습니다. 이는 단순한 멈춤이 아닌 <strong>'스스로의 방향성을 찾는 사유의 시간'</strong>임을 직관적으로 시각화한 핵심 디테일입니다.
+          </p>
+
+          <div class="concept__chips">
+            <span class="concept__chip">#3D Felt Texture</span>
+            <span class="concept__chip">#Layered Depth</span>
+            <span class="concept__chip">#Forest Therapy</span>
+            <span class="concept__chip">#Mental Care</span>
+            <span class="concept__chip">#Mindfulness</span>
+          </div>
+        </div>
+
+        <div class="concept__table anim-fade">
+          <div class="concept__table-row">
+            <span class="concept__table-key">Project Type</span>
+            <span class="concept__table-val">Mental Care / Public Campaign Poster</span>
+          </div>
+          <div class="concept__table-row">
+            <span class="concept__table-key">Art Direction</span>
+            <span class="concept__table-val">Hong Gil-dong</span>
+          </div>
+          <div class="concept__table-row">
+            <span class="concept__table-key">Gen-AI Pipeline</span>
+            <span class="concept__table-val">Midjourney v6, Photoshop Firefly</span>
+          </div>
+          <div class="concept__table-row">
+            <span class="concept__table-key">Retouch & Typo</span>
+            <span class="concept__table-val">Adobe Photoshop, Illustrator</span>
+          </div>
+          <div class="concept__table-row">
+            <span class="concept__table-key">Timeline</span>
+            <span class="concept__table-val">3 Days (2026.09)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Style Guide & Colors -->
+  <section id="style" class="section">
+    <div class="container">
+      <div class="section__header anim-fade">
+        <div class="section__tag">02 / Style System</div>
+        <h2 class="section__heading">포스터 추출 컬러 팔레트 & 타이포그래피</h2>
+      </div>
+
+      <!-- Colors -->
+      <div class="palette__grid anim-fade">
+        <div class="color-card">
+          <div class="color-card__preview" style="background: #1D3B2F;"></div>
+          <div class="color-card__info">
+            <div class="color-card__name">Deep Forest</div>
+            <div class="color-card__hex">#1D3B2F</div>
+          </div>
+        </div>
+
+        <div class="color-card">
+          <div class="color-card__preview" style="background: #4F8567;"></div>
+          <div class="color-card__info">
+            <div class="color-card__name">Moss Sage</div>
+            <div class="color-card__hex">#4F8567</div>
+          </div>
+        </div>
+
+        <div class="color-card">
+          <div class="color-card__preview" style="background: #8ABFA6;"></div>
+          <div class="color-card__info">
+            <div class="color-card__name">Felt Mint</div>
+            <div class="color-card__hex">#8ABFA6</div>
+          </div>
+        </div>
+
+        <div class="color-card">
+          <div class="color-card__preview" style="background: #E8AF55;"></div>
+          <div class="color-card__info">
+            <div class="color-card__name">Morning Sunbeam</div>
+            <div class="color-card__hex">#E8AF55</div>
+          </div>
+        </div>
+
+        <div class="color-card">
+          <div class="color-card__preview" style="background: #F4EFE6;"></div>
+          <div class="color-card__info">
+            <div class="color-card__name">Warm Paper Cream</div>
+            <div class="color-card__hex">#F4EFE6</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Typography -->
+      <div class="typography__wrap anim-fade">
+        <div class="typo-box">
+          <div class="typo-box__badge">Primary Headings</div>
+          <div class="typo-box__sample" style="font-weight: 700;">Pretendard Bold</div>
+          <div class="typo-box__desc">
+            포스터 본문의 펠트 양각 캘리그래피 및 볼드 타이틀과 조화를 이루는 고밀도 고딕 패밀리. 시각적 주목도와 높은 가독성을 제공합니다.
+          </div>
+        </div>
+        <div class="typo-box">
+          <div class="typo-box__badge">Accent & Display Font</div>
+          <div class="typo-box__sample" style="font-family: var(--font-display); font-style: italic;">Cormorant Garamond</div>
+          <div class="typo-box__desc">
+            자연주의적인 우아함과 클래식한 온기를 전달하기 위해 영문 서브타이틀 및 악센트 요소로 매칭한 프리미엄 세리프 서체입니다.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       Mockup Showcase : 왼 - 오 - 왼 대형 수직 스크롤 배치
+  ========================================================= -->
+  <section id="mockup" class="section">
+    <div class="container">
+      <div class="section__header anim-fade">
+        <div class="section__tag">03 / Environmental Adaptation</div>
+        <h2 class="section__heading">공간과 매체에 깃든 치유의 조형</h2>
+      </div>
+
+      <div class="mockup-flow">
+        
+        <!-- [1] 왼쪽 이미지 - 오른쪽 설명 -->
+        <div class="mockup-row js-mockup-row" data-dir="left">
+          <div class="mockup-row__visual">
+            <div class="mockup-frame mockup-frame--wood" style="background-image: url('목업1.png');">
+              <!-- 포스터 이미지 적용 -->
+            </div>
+          </div>
+          <div class="mockup-row__content">
+            <div class="mockup-row__number">01</div>
+            <span class="mockup-row__badge">Interior / Gallery Exhibition</span>
+            <h3 class="mockup-row__title">마인드풀니스 라운지 대형 원목 프레임 마운트</h3>
+            <p class="mockup-row__desc">
+              빛이 부드럽게 스며드는 도심 속 힐링 라운지와 심리상담 센터 입구에 배치된 대형 포스터 연출입니다. 
+              깊이감 있는 원목 프레임과 매트한 비반사 글라스를 더해, 포스터의 펠트 공예 질감이 공간 전체에 차분하고 포근한 분위기를 퍼뜨립니다.
+            </p>
+            <div class="mockup-row__specs">
+              <div class="mockup-row__spec-item">Size: <span>841 x 1189 mm (A0)</span></div>
+              <div class="mockup-row__spec-item">Material: <span>Walnut Frame & Cotton Rag</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- [2] 오른쪽 이미지 - 왼쪽 설명 (오른쪽 배치) -->
+        <div class="mockup-row mockup-row--reverse js-mockup-row" data-dir="right">
+          <div class="mockup-row__visual">
+            <div class="mockup-frame mockup-frame--light" style="background-image: url('목업2.png');">
+              <!-- 포스터 이미지 적용 -->
+            </div>
+          </div>
+          <div class="mockup-row__content">
+            <div class="mockup-row__number">02</div>
+            <span class="mockup-row__badge">Urban Architecture / Shelter</span>
+            <h3 class="mockup-row__title">도심 스마트 쉘터 백라이트 미디어쉘터</h3>
+            <p class="mockup-row__desc">
+              퇴근길과 일상의 스트레스에 지친 시민들이 잠시 머무는 도심 정류장 라이트박스에 적용되었습니다. 
+              배면 발광(Backlight) 패널을 통해 원경의 아침 햇살 그래픽이 밤 시간대에 은은하게 발광하여 보행자에게 감성적인 쉼을 제안합니다.
+            </p>
+            <div class="mockup-row__specs">
+              <div class="mockup-row__spec-item">Media: <span>Backlit Polycarbonate Film</span></div>
+              <div class="mockup-row__spec-item">Display: <span>Night-Ambient Illuminator</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- [3] 왼쪽 이미지 - 오른쪽 설명 -->
+        <div class="mockup-row js-mockup-row" data-dir="left">
+          <div class="mockup-row__visual">
+            <div class="mockup-frame mockup-frame--book" style="background-image: url('목업3.png');">
+              <!-- 포스터 이미지 적용 -->
+            </div>
+          </div>
+          <div class="mockup-row__content">
+            <div class="mockup-row__number">03</div>
+            <span class="mockup-row__badge">Print Edition / Editorial</span>
+            <h3 class="mockup-row__title">산림 치유 워크북 및 아카이브 북 에디션</h3>
+            <p class="mockup-row__desc">
+              캠페인 참여자들에게 배포되는 셀프 멘탈케어 저널의 하드커버 패키징입니다. 
+              친환경 비도공지(FSC 인증 랑데뷰지)에 포스터의 펠트 결을 살린 에칭 엠보싱(Embossing) 후가공을 적용해 촉각적 만족도를 극대화했습니다.
+            </p>
+            <div class="mockup-row__specs">
+              <div class="mockup-row__spec-item">Print: <span>Offset Printing with Blind Deboss</span></div>
+              <div class="mockup-row__spec-item">Paper: <span>Rendezvous Natural 240gsm</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="contact" class="footer anim-fade">
+    <div class="container">
+      <h2 class="footer__title">함께 비우고 채우는 디자인을 만듭니다</h2>
+      <p class="footer__desc">
+        생성형 AI와 정교한 그래픽 디테일의 융합으로 브랜드에 감성적 서사를 더합니다. 새로운 프로젝트 및 협업 문의를 기다립니다.
+      </p>
+      <div class="footer__links">
+        <a href="mailto:designer@example.com" class="footer__btn">
+          <span>Get in Touch</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+        </a>
+      </div>
+      <p class="footer__copy">© 2026 Hong Gil-dong. Visual Direction & Gen-AI Design. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- GSAP & ScrollTrigger Interactive Script -->
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // [1] 기본 공통 섹션 인터랙션 (Hero, Concept, Style, Footer)
+    const fadeElements = document.querySelectorAll('.anim-fade');
+    fadeElements.forEach((el) => {
+      gsap.fromTo(
+        el,
+        {
+          y: 45,
+          opacity: 0
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1.1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 85%",
+            toggleActions: "play none none reverse", // 스크롤 역방향 시 부드러운 리버스
+            markers: false
+          }
+        }
+      );
+    });
+
+    // [2] 목업 갤러리 개별 행(Row) 스크롤 등장 & 리버스 애니메이션
+    const mockupRows = document.querySelectorAll('.js-mockup-row');
+
+    mockupRows.forEach((row) => {
+      const isLeft = row.dataset.dir === "left";
+      const visual = row.querySelector('.mockup-row__visual');
+      const content = row.querySelector('.mockup-row__content');
+
+      // 타임라인 생성
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: row,
+          start: "top 78%", // 화면의 78% 지점에 도달할 때 시작
+          end: "bottom 20%",
+          toggleActions: "play none none reverse", // 올릴 때 정확히 역방향 재생
+          markers: false
+        }
+      });
+
+      // 이미지는 좌우에서 부드럽게 슬라이드 + 페이드
+      tl.fromTo(
+        visual,
+        {
+          x: isLeft ? -70 : 70,
+          opacity: 0,
+          scale: 0.95
+        },
+        {
+          x: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 1.2,
+          ease: "power3.out"
+        }
+      )
+      // 설명 텍스트는 아래에서 위로 살짝 페이드인 (0.3초 오버랩)
+      .fromTo(
+        content,
+        {
+          y: 40,
+          opacity: 0
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1.0,
+          ease: "power3.out"
+        },
+        "-=0.9"
+      );
+    });
+
+    // [3] Hero 포스터 패럴랙스 보정
+    gsap.to(".hero__poster", {
+      scrollTrigger: {
+        trigger: ".hero",
+        start: "top top",
+        end: "bottom top",
+        scrub: 1
+      },
+      y: 35,
+      ease: "none"
+    });
+  </script>
+</body>
+</html>
