@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/@xpressengine/xeicon@latest/xeicon.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="./css/style.css" />
+
+  <!-- GSAP & ScrollTrigger CDN (head 태그 안 또는 body 하단에 추가) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+<body>
+  <!-- 메인 인트로 (Hero Section) -->
+  <section class="hero-section">
+    <div class="video_inner">
+      <video class="hero-bg-video" autoplay loop muted playsinline>
+        <source src="./source/bedroom_background.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>      
+    </div>
+    <!-- 네비게이션 헤더 -->
+    <header class="hero-header">
+      <div class="logo">MY PORTFOLIO</div>
+      <div class="case-study-tag">CASE STUDY: GICHUN’S LETHARGIC DAY</div>
+    </header>
+
+    <!-- 인트로 메인 콘텐츠 영역 -->
+    <div class="hero-container">
+      
+      <!-- 왼쪽: 타이틀 & 서브타이틀 -->
+      <div class="hero-title-box">
+        <h1 class="main-title">
+          GICHUN’S<br>
+          <span class="highlight">LETHARGIC DAY</span>
+        </h1>
+        <p class="sub-title">기춘의 무기력한 하루: AI 시네마틱 숏폼 케이스 스터디</p>
+      </div>
+
+      <!-- 오른쪽: 요약 카드 (Glassmorphism) -->
+      <div class="summary-card">
+        <h2 class="card-title">PROJECT SUMMARY</h2>
+        
+        <div class="summary-item">
+          <div class="icon">
+            <i class="xi-book xi-2x"></i>
+          </div>
+          <div class="info">
+            <span class="label">ROLE</span>
+            <span class="value">Directed, AI Promptech, Visual Editing</span>
+          </div>
+        </div>
+
+        <div class="summary-item">
+          <div class="icon">
+            <i class="xi-wrench xi-2x"></i>
+          </div>
+          <div class="info">
+            <span class="label">TOOLS</span>
+            <span class="value">Gemini, Google Flow, CapCut</span>
+          </div>
+        </div>
+
+        <div class="summary-item">
+          <div class="icon">
+            <i class="xi-key xi-2x"></i>
+          </div>
+          <div class="info">
+            <span class="label">KEY POINT</span>
+            <span class="value">Emotion-focused character motion</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+  </section>
+  
+  
+  <!-- 메인 케이스 스터디 섹션 (Left: Content Scroll / Right: Fixed Output) -->
+  <section class="case-study-section">
+    <div class="case-study-container">
+
+      <!-- 좌측: 수직 나열 컨텐츠 영역 (Scroll) -->
+      <div class="content-left">
+        
+        <!-- 01. STORYBOARD & NARRATIVE DESIGN -->
+        <article class="content-block reveal-item">
+          <div class="block-header">
+            <span class="block-num">1.</span>
+            <h2 class="block-title">STORYBOARD & NARRATIVE DESIGN</h2>
+          </div>
+          <p class="block-desc">
+            캐릭터의 '무기력함'과 '일상의 변화'를 극적으로 대비시키기 위한 10개의 핵심 장면 콘티 설계입니다.
+          </p>
+          <!-- 이미지 태그 위치 -->
+          <div class="img-holder storyboard-holder">
+            <img src="./source/storyboard.jpeg" alt="Storyboard Grid" />
+          </div>
+        </article>
+
+        <!-- 02. AI CHARACTER CONSISTENCY & CONCEPT SHEET -->
+        <article class="content-block reveal-item">
+          <div class="block-header">
+            <span class="block-num">2.</span>
+            <h2 class="block-title">AI CHARACTER CONSISTENCY & CONCEPT SHEET</h2>
+          </div>
+          <p class="block-desc">
+            동일한 캐릭터의 체형, 텍스처, 다채로운 감정 표정(Tired, Sighing, Apathetic 등) 일관성을 다각도로 유지하도록 구현했습니다.
+          </p>
+          <!-- 이미지 태그 위치 -->
+          <div class="img-holder character-holder">
+            <img src="./source/character_sheet.jpeg" alt="Character Sheet" />
+          </div>
+        </article>
+
+        <!-- 03. PRODUCTION ASSET PIPELINE -->
+        <article class="content-block reveal-item">
+          <div class="block-header">
+            <span class="block-num">3.</span>
+            <h2 class="block-title">PRODUCTION ASSET PIPELINE</h2>
+          </div>
+          <p class="block-desc">
+            Generative AI 생성 샷부터 VFX 보정, 타임라인 컷 편집 및 오디오(V.O/BGM) 파이프라인 구성 요소입니다.
+          </p>
+
+          <div class="asset-grid">
+            <!-- AI Voice & BGM 카드가 들어갈 자리 -->
+            <div class="asset-card audio-card">
+              <div class="card-label">AI VOICE & BGM</div>
+              <div class="audio-waveform-mock">
+                <i class="xi-soundwave xi-2x"></i>
+                <span>GICHUN V.O. & Track Audio</span>
+              </div>
+            </div>
+
+            <!-- 프로세스 가이드 자리 -->
+            <div class="asset-card process-card">
+              <div class="process-step">
+                <span class="step-icon"><i class="xi-openai"></i></span>
+                <span class="step-text">GENERATIVE AI</span>
+              </div>
+              <i class="xi-arrow-right"></i>
+              <div class="process-step">
+                <span class="step-icon"><i class="xi-box"></i></span>
+                <span class="step-text">VFX</span>
+              </div>
+              <i class="xi-arrow-right"></i>
+              <div class="process-step">
+                <span class="step-icon"><i class="xi-videocam"></i></span>
+                <span class="step-text">EDIT</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- 우측: 화면 고정 결과물 영역 (Fixed/Sticky Right) -->
+      <div class="content-right">
+        <div class="sticky-wrapper">
+          <div class="phone-mockup-container">
+            <span class="mockup-label">FINAL SHORT-FORM OUTPUT</span>
+            
+            <!-- 핸드폰 프레임 UI -->
+            <div class="phone-frame">
+              <iframe id="movie" src="https://www.youtube-nocookie.com/embed/x5HN8ja1Z4o?autoplay=1&mute=1&loop=1&playlist=x5HN8ja1Z4o" 
+              title="기춘쌤의 무기력한 하루"
+              frameborder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+              <!-- 비디오 조작 캡션 -->
+              <div class="video-overlay-controls">
+                <i class="xi-volume-off xi-x"></i>
+                <i class="xi-play xi-x"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 하단 영역 (Footer & Project Metrics) -->
+  <footer class="portfolio-footer">
+    <div class="footer-container">
+      
+      <!-- 프로젝트 성과 요약 카드 -->
+      <div class="impact-metrics-card reveal-item">
+        <h3 class="metrics-title">PROJECT IMPACT & METRICS</h3>
+        <div class="metrics-grid">
+          <div class="metric-item">
+            <span class="metric-label">VIEWS</span>
+            <span class="metric-value">120K+</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">RETENTION</span>
+            <span class="metric-value">72%</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">ENGAGEMENT</span>
+            <span class="metric-value">8.4%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 네비게이션 & 연락처 하단 바 -->
+      <div class="footer-bottom">
+        <div class="footer-contacts">
+          <a href="#" aria-label="Call"><i class="xi-call xi-x"></i></a>
+          <a href="#" aria-label="Mail"><i class="xi-mail xi-x"></i></a>
+          <a href="#" aria-label="Web"><i class="xi-globus xi-x"></i></a>
+        </div>
+        
+        <a href="#hero" class="btn-back-projects">
+          <span>BACK TO PROJECTS</span>
+          <i class="xi-arrow-up"></i>
+        </a>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- GSAP 스크롤 애니메이션 스크립트 -->
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // 스크롤 시 우측 컨텐츠들이 유동적으로 등장하는 애니메이션
+    const revealItems = document.querySelectorAll('.reveal-item');
+    
+    revealItems.forEach((item) => {
+      gsap.fromTo(item, 
+        { 
+          opacity: 0, 
+          y: 160 
+        },
+        { 
+          opacity: 1, 
+          y: 0, 
+          duration: 1.2, 
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: item,
+            start: "top 85%", // 화면의 85% 지점에 올 때 실행
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+    });
+  </script>
+ 
+</body>
+</html>
